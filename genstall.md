@@ -65,4 +65,46 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
 (If satisfied, append `w` and it will automatically exit `fdisk`)
 
 >[!NOTE]
-> Before we begin, idk, let's just go 
+> Before we begin, idk, let's just go
+
+# 0.3 : Stage Tarball, Emerge
+Wow that was quick, already into ~~balls~~ tarballs, let's get it 
+
+### I took the OpenRC w/ Desktop Profile. This includes some stuff (llvm etc) and whatever shit you don't compile (for now, oh and to get you started for installing a DE or a WM after install)
+> I'll prob research on this bit, but thanks to Alx, he did say go for desktop profiles, u da man
+
+Alright, since you're on tty, no GUI, how do we get our tarball? We use `links`, `wget` works, but with `links` you can access the Gentoo Website even on a tty.
+
+>[!NOTE]
+> Beforehand, we set the date first. You don't want a system that has a 2009 date set do you?
+
+- Append as follows:
+   - `date mm/dd/hh/mm/yy` (e.g 040112002024)
+   - Note that the clock uses Military Time. 12nn past uses 1300 and so on.
+
+  Alright, got the date set, now we sleep.
+
+>[!NOTE]
+>cd into `/mnt/gentoo` beforehand so our tarball will be downloaded there.
+
+ Alright, let's use links to get our tarball
+
+ - Make sure you have changed directory.
+ -  `links https://www.gentoo.org/downloads/#amd64-advanced`
+ -  Find "Stage Archives", "Stage 3", and then enter on `desktop profile | openrc`
+
+   ### A prompt will appear that it's a downloadable link, follow what it says, and wait for the tarball to complete.
+
+   Suppose you're done with downloading it, click `q` to exit links.
+
+## Extracting the Tarball
+  >[!NOTE]
+> Make sure you're into `/mnt/gentoo`, to make sure you have the downloaded tarball, use `ls` (This will list all the files in the directory, as of now, it should only have a folder called `lost+found`, and the tarball we downloaded)
+
+  - To extract the tarball ;
+  - `tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner`
+  - Depending on your system, this would take a bit. But hey, the beefier, the better.
+
+-will continue-
+    
+
