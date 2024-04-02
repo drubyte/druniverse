@@ -62,7 +62,7 @@ There should be an output message that it has been initialized.
    - `add_network` (Number 0 will appear, and the saved connection will be on this number.)
    - `set_network 0 ssid "SSID"` (include the quotings.)
    - `set_network 0 psk "Your SSID's password"` (again, include the quoting.)
-   - `enable_network 0` (If you read the line `CTRL_EVENT_CONNECTED`, you have successfully connected to the internet.
+   - `enable_network 0` (If you read the line `CTRL_EVENT_CONNECTED`, you have successfully connected to the internet.)
    - `save_config`
    - `quit`
 
@@ -71,13 +71,13 @@ There should be an output message that it has been initialized.
 
 * If all is good, proceed partitioning the disks.
 
-# 0.2 : Disk Partition
+# 0.3 : Disk Partition
 I'll use `fdisk` for this, I'm mostly used to this one and also recommend from the Wiki.
 
 > [!NOTE]
 > Check which disk is to be partitioned, you might nuke your other drive, you're stupid if that is.
 
-### Usually, you'll need `boot`, `swap`, and `root`, In this case I will also use `ext4` (butterfs haha loooool)
+### Usually, you'll need `boot`, `swap`, and `root`, In this case I will use `Ext4`
 
 ### Boot
 - Proceed as follows :
@@ -111,8 +111,7 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
 
 >[!IMPORTANT]
 > Before we begin, we need to format our partitions we made.
-
-> [!IMPORTANT]
+>
 > Double check the partitions with `lsblk`, don't be stupid to format the wrong partition.
 
 - To format our root partition with Ext4
@@ -136,8 +135,8 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
  - Mount the root partition
     - `mount /dev/sdXn` (Where X is the root partition, N for the number of the partition, e.g /dev/sda3)
 
-# 0.3 : Stage Tarball, Emerge
- This section covers downloading the tarball, extracting, setting up portage and performing system update.
+# 0.4 : Extracting Tarball & Configuring `make.conf`
+ This section covers downloading the tarball and configuring make.conf
 
 ### I took the OpenRC w/ Desktop Profile. This includes some stuff (llvm etc) and whatever shit you don't compile (for now, oh and to get you started for installing a DE or a WM after install)
 > I'll prob research on this bit, but thanks to Alx, he did say go for desktop profiles, u da man
@@ -151,10 +150,8 @@ Alright, since you're on tty, no GUI, how do we get our tarball? We use `links`,
    - `date mm/dd/hh/mm/yy` (e.g 040112002024)
    - Note that the clock uses Military Time. 12nn past uses 1300 and so on.
 
-  Alright, got the date set, now we sleep.
-
->[!NOTE]
->cd into `/mnt/gentoo` beforehand so our tarball will be downloaded there.
+> [!NOTE]
+> cd into `/mnt/gentoo` beforehand so our tarball will be downloaded there.
 
  Alright, let's use links to get our tarball
 
@@ -174,7 +171,37 @@ Alright, since you're on tty, no GUI, how do we get our tarball? We use `links`,
   - `tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner`
   - Depending on your system, this would take a bit. But hey, the beefier, the better.
 
-## Chrooting into the system
+### Configuring `make.conf`
+
+>[!CAUTION]
+> You should know what are you doing with configuring your compile options, failure to do so may end in an unexpected outcome.
+
+> [!NOTE]
+> We will frequently use nano at this point. Few things to remember
+
+> CTRL + S to Save,
+> CTRL + X to Quit
+
+ Let's edit out `make.conf`
+ - `nano /mnt/gentoo/etc/portage/make.conf`
+> You can append `-march=native` on `COMMON_FLAGS` (e.g `COMMON_FLAGS="-march=native -02 -pipe`) or leave it unset.
+
+ After editing `COMMON_FLAGS`, we can also add our `MAKEOPTS` variable.
+
+> [!NOTE]
+> From the Wiki
+> 
+> *set the MAKEOPTS jobs value to the same number of threads and the MAKEOPTS load-average value to the same number of threads returned by `nproc`*
+
+* To check your threads, enter `nproc` and it should show how much do you have.
+  > Since mine has 4 cores and has 4 GB of RAM, I set mine to `-j4 -l4`.
+  > Or if you have 4 cores with 12 GB RAM, we can do `-j6 -l5`. We divide the core count by 2.
+
+  Save and Exit. We will be back on our `make.conf` often. But for now we proceed for the next step.
+
+# 0.5 Chroot & Installing Base System
+
+## DNS & Mounting FS
 >[!NOTE]
 > Before we proceed, it's necessary to copy the dns info so that we still have our internet upon chrooting.
 
@@ -182,7 +209,7 @@ Alright, since you're on tty, no GUI, how do we get our tarball? We use `links`,
   - `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
 # Mounting Filesystems
-- Before we chroot, let's mount our filesystem first do that everything we do from this point will be saved on our new gentoo install.
+- Let's mount our filesystem first do that everything we do from this point will be saved on our new gentoo install.
 
 > [!TIP]
 > Assuming you have used the Gentoo ISO, simply do `arch-chroot /mnt/gentoo`.
@@ -192,16 +219,7 @@ Alright, since you're on tty, no GUI, how do we get our tarball? We use `links`,
 
   
   - `source /etc/profile`
-  - `export PS1="(chroot) ${PS1}"`
-
-> [!IMPORTANT]
-> wait i forgot
-  
-
-### Configuring `make.conf`
-
->[!CAUTION]
-> You should know what are you doing with configuring your compile options, failure to do so may end in an unexpected outcome.
+  - `export PS1="(chroot) ${PS1}"` 
 
 
     
