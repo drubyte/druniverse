@@ -36,7 +36,7 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
 
 ### Boot
 - Proceed as follows :
-   - fdisk /dev/sdaX (substitute X from the disk of your pc)
+   - fdisk /dev/sdX (substitute X from the disk of your pc)
     - `p` (list partition)
     - (assuming you have not deleted them yet) `d` (delete partition)
     - (disks deleted, make a new one) `g` (creates a gpt partition)
@@ -65,7 +65,19 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
 (If satisfied, append `w` and it will automatically exit `fdisk`)
 
 >[!NOTE]
-> Before we begin, idk, let's just go
+> Before we begin, we need to format our partitions we made.
+
+> [!IMPORTANT]
+> Double check the partitions with `lsblk`, don't be stupid to format the wrong partition.
+
+- To format our root partition with Ext4
+   - `mkfs.ext4 /dev/sdX` (replace X with root partition)
+     
+- Format our efi partition to FAT32
+  - `mkfs.vfat -F 32 /dev/sdX` (replace X with EFI partition)
+ 
+- Create and Activate Swap
+   - `mkswap /dev/sdX`
 
 # 0.3 : Stage Tarball, Emerge
 Wow that was quick, already into ~~balls~~ tarballs, let's get it 
@@ -105,6 +117,35 @@ Alright, since you're on tty, no GUI, how do we get our tarball? We use `links`,
   - `tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner`
   - Depending on your system, this would take a bit. But hey, the beefier, the better.
 
--will continue-
+## Chrooting into the system
+>[!NOTE]
+> Before we proceed, it's necessary to copy the dns info so that we still have our internet upon chrooting.
+
+- Do so by passing `--dereference` option to the `cp` command.
+  - `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
+
+# Mounting Filesystems
+- Before we chroot, let's mount our filesystem first do that everything we do from this point will be saved on our new gentoo install.
+
+> [!TIP]
+> Assuming you have used the Gentoo ISO, simply do `arch-chroot /mnt/gentoo`.
+
+  
+  Finally, let's source `/etc/profile` and also to make sure we are chrooted.
+
+  
+  - `source /etc/profile`
+  - `export PS1="(chroot) ${PS1}"`
+
+> [!IMPORTANT]
+> wait i forgot
+  
+
+### Configuring `make.conf`
+
+>[!CAUTION]
+> You should know what are you doing with configuring your compile options, failure to do so may end in an unexpected outcome.
+
+
     
 
