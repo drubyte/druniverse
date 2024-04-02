@@ -221,6 +221,40 @@ Alright, since you're on tty, no GUI, how do we get our tarball? We use `links`,
   - `source /etc/profile`
   - `export PS1="(chroot) ${PS1}"` 
 
+## EFI Directory Creation
+We need to make our `/efi` and mount it so that we can install the bootloader and be able to boot into gentoo after we're done configuring the system.
 
-    
+ * At this point, you should probably know by now your partitions, which is for boot, root, swap.
+ * `mkdir /efi`
+ * `mount /dev/sdX /efi`
+
+## Portage
+This part probably takes the longest, prior to `@world` update. So prepare for a lot of patience.
+
+ - `mkdir --parents /etc/portage/repos.conf`
+ - `cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf`
+ - To check if it was successfully copied, use the `cat` command.
+ - `cat /etc/portage/repos.conf/gentoo.conf`
+## Fetching Snapshot
+To be able to display profiles, we need a quick update of portage.
+
+ - `emerge-webrsync`
+
+### Selecting Mirrors
+Having a mirror much closer to yours is a lot better, This also makes sure you get the source code download quicker.
+
+ - `emerge --ask --verbose --oneshot app-portage/mirrorselect`
+ - or `emerge -av1`
+ - `mirrorselect -i -o >> /etc/portage/make.conf`
+   
+> To hover through the cli, use arrow keys, Home and End button (if your keyboard has it) and use Spacebar for selecting mirrors, if you're done, use Tab to go to the Ok button and it will automatically exit and record their mirrors you chose.
+
+## Updating the Gentoo ebuild repository
+
+ - Although optional, it's better to have it updated just in case.
+ - `emerge --sync`
+ - If you prefer no texts, `emerge --sync --quiet` (helpful for potato laptops)
+
+   ***break***
+
 
