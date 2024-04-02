@@ -1,6 +1,9 @@
 # Gentoo UEFI Install 
-> status : ongoing
-> (not an install script)
+> [!NOTE]
+> This is my guide for a Gentoo UEFI install, Since the Wiki includes `DOS/MBR` + other configuration, I only took what I needed for the minimal install.
+
+> [!CAUTION]
+> NOT AN INSTALL SCRIPT! Gentoo is best installed from scratch, knowing what you do and how it happens.
 
 
 
@@ -10,21 +13,61 @@ System Specs
 
 > used to install on an i5 with 12gb RAM, but it has to stay on Windows.
 
-Expected that you have read the [Gentoo Wiki](
-https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/About)
+Expected that you have the basic knowledge of Linux and has an experience installing from a console. (or anything that isn't an installer)
 
-* Prequities
-    - A flashdrive
-    - The Gentoo ISO
-    - A brain
- 
+# 0.1 : Introduction to the Guide
+ This guide will help you for a minimal gentoo install with a binhost config. After the initial install, you are recommended to checkout the Gentoo Wiki for more information.
 
-# 0.1 : Booting | Wi-Fi
-Again, This tutorial is for (at least) experienced linux user.
+# 0.2 : Booting on the ISO
 
-### Connecting through [wpa_supplicant](https://wiki.archlinux.org/title/Wpa_supplicant)
+**Recommended** utility for keeping ISO'S : Ventoy
 
-This is straightforward and should be fast. If you're using Ethernet, skip this (problems may occur after install, I don't have ethernet cable so rely to the Wiki if it persists.)
+Ventoy is great especially for external hard drives. You can keep your ISO's and keep your files, all in one. 
+> I won't cover the Ventoy install on this one. It's easy though, you'll be fine.
+
+At initial boot, you'll see tuxes on the left side of the screen
+> They'll appear on how many cores do you have, In my case, 4
+
+### Connecting through wpa_supplicant
+> Assuming you're using wireless connection for the wifi
+
+ - First, we need to check your wireless interface (e.g `wlan0, wlp2s0, wlp3s0f0`)
+   - `ip link`
+   - It's usually listed as the last part on the list.
+
+### We will be using `wpa_cli` to establish the connection.
+
+ - Let's enable `wpa_supplicant` so it can detect networks.
+    - `nano /etc/wpa_supplicant/wpa_supplicant.conf`
+    - Add `ctrl_interface=/run/wpa_supplicant` on the first line, then `update_config=1` on the second line.
+    - Hit `ctrl + s` and then `ctrl + x` to save and exit from nano.
+
+    Just in case you forgot the wireless interface, use `ip link` again to list it.
+
+Now, we need to enable the interface with `wpa_supplicant`.
+`wpa_supplicant -B -i interface -c /etc/wpa_supplicant/wpa_supplicant.conf`
+
+There should be an output message that it has been initialized.
+
+### Now, we're gonna go to `wpa_cli` to connect on our wifi.
+
+> [!NOTE]
+> Read the outputs, especially when connecting.
+
+- Run `wpa_cli`
+   - `scan`
+   - `scan_results` (Find your SSID)
+   - `add_network` (Number 0 will appear, and the saved connection will be on this number.)
+   - `set_network 0 ssid "SSID"` (include the quotings.)
+   - `set_network 0 psk "Your SSID's password"` (again, include the quoting.)
+   - `enable_network 0` (If you read the line `CTRL_EVENT_CONNECTED`, you have successfully connected to the internet.
+   - `save_config`
+   - `quit`
+
+ - To check if you have an internet connection:
+   - `ping -c (this commands how many times do you want to check the ping) 3 google.com`
+
+* If all is good, proceed partitioning the disks.
 
 # 0.2 : Disk Partition
 I'll use `fdisk` for this, I'm mostly used to this one and also recommend from the Wiki.
@@ -64,7 +107,7 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
 
 (If satisfied, append `w` and it will automatically exit `fdisk`)
 
->[!NOTE]
+>[!IMPORTANT]
 > Before we begin, we need to format our partitions we made.
 
 > [!IMPORTANT]
@@ -80,8 +123,19 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
    - `mkswap /dev/sdX`
    - `swapon /dev/sdX` (wherein X is the swap partition, duh)
 
+### Mounting Partitions
+
+ Now that we have formatted our partitions, we need to mount them so we can install our Gentoo System on our pc.
+
+ - Create a directory w/ efi
+    - `mkdir --parents /mnt/gentoo`
+    - `mkdir --parents /mnt/gentoo/efi`
+
+ - Mount the root partition
+    - `mount /dev/sdXn` (Where X is the root partition, N for the number of the partition, e.g /dev/sda3)
+
 # 0.3 : Stage Tarball, Emerge
-Wow that was quick, already into ~~balls~~ tarballs, let's get it 
+ This section covers downloading the tarball, extracting, setting up portage and performing system update.
 
 ### I took the OpenRC w/ Desktop Profile. This includes some stuff (llvm etc) and whatever shit you don't compile (for now, oh and to get you started for installing a DE or a WM after install)
 > I'll prob research on this bit, but thanks to Alx, he did say go for desktop profiles, u da man
