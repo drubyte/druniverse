@@ -2,6 +2,8 @@
 > [!NOTE]
 > This is my guide for a Gentoo UEFI install, Since the Wiki includes `DOS/MBR` + other configuration, I only took what I needed for the minimal install.
 
+> This is a work in progress. It's recommend to not follow this for now.
+
 > [!CAUTION]
 > NOT AN INSTALL SCRIPT! Gentoo is best installed from scratch, knowing what you do and how it happens.
 
