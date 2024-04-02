@@ -78,6 +78,7 @@ I'll use `fdisk` for this, I'm mostly used to this one and also recommend from t
  
 - Create and Activate Swap
    - `mkswap /dev/sdX`
+   - `swapon /dev/sdX` (wherein X is the swap partition, duh)
 
 # 0.3 : Stage Tarball, Emerge
 Wow that was quick, already into ~~balls~~ tarballs, let's get it 
