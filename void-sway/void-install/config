@@ -1,0 +1,160 @@
+# Some weird numbers here, I'll remove this and fix the whole config file if I get back to Void.
+# 86 97 114 105 97 98 108 101 115 
+
+# 76 111 103 111 32 75 101 121 
+set $mod Mod4
+set $alt Mod1
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+# 67 104 111 105 99 101 32 111 102 32 84 101 114 109 105 110 97 108 32 69 109 117 108 97 116 111 114 
+set $term foot
+
+# 87 111 102 105 
+set $menu wofi -c ~/.config/wofi/config -I
+
+# 86 111 108 117 109 101 32 38 32 66 114 105 103 104 116 110 101 115 115 
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+#
+set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
+#
+exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
+font pango:Hack Nerd Font 12
+
+# 84 104 101 109 105 110 103 
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+  gsettings set $gnome-schema gtk-theme 'adwaita-dark-amoled-master'
+  gsettings set $gnome-schema icon-theme 'Papirus-Dark'
+  gsettings set $gnome-schema cursor-theme 'Adwaita'
+  gsettings set $gnome-schema cursor-size '28'
+  gsettings set $gnome-schema font-name 'Iosevka 11'
+}
+
+# 84 105 116 108 101 32 66 97 114 
+default_border pixel 3
+include $HOME/.config/sway/config.d/*
+
+# 87 97 108 108 112 97 112 101 114 
+output * bg $HOME/Pictures/berserk.jpg fill
+
+# 73 100 108 101 
+exec swayidle -w\
+  timeout 1200 'swaylock -f -C ~/.config/swaylock/config'\
+timeout 900 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -C ~/.config/swaylock/config'
+
+# 84 111 117 99 104 112 97 100 10 
+input type:touchpad {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+}
+
+input "1:1:AT_Translated_Set_2_keyboard" {
+  repeat_rate 50
+  repeat_delay 240
+}
+
+# 86 111 108 & 65 117 100 
+
+bindsym XF86AudioRaiseVolume exec pamixer -ui 2 && pamixer --get-volume > $WOBSOCK
+bindsym XF86AudioLowerVolume exec pamixer -ud 2 && pamixer --get-volume > $WOBSOCK
+bindsym XF86AudioMute exec pamixer --toggle-mute && ( [ "$(pamixer --get-mute)" = "true" ] && echo 0 > $WOBSOCK ) || pamixer --get-volume > $WOBSOCK
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+bindsym XF86MonBrightnessUp exec light -A 5 && light -G | cut -d'.' -f1 > $WOBSOCK
+bindsym XF86MonBrightnessDown exec light -U 5 && light -G | cut -d'.' -f1 > $WOBSOCK
+  
+# 75 101 121 98 105 110 100 
+
+ bindsym $mod+Return exec $term
+ bindsym $mod+q kill
+ bindsym $mod+d exec $menu
+ floating_modifier $mod normal
+ bindsym $mod+Ctrl+q reload
+ bindsym $mod+Shift+e exec pcmanfm
+ bindsym $mod+w exec $HOME/Thorium\ Browser/thorium/thorium
+
+# 83 115 
+
+ bindsym Print exec grimshot --notify copy output
+ bindsym $mod+Print exec grimshot --notify save output
+ bindsym ctrl+alt+Print exec grimshot --notify save
+ bindsym alt+Print exec grimshot --notify copy active
+ bindsym $mod+alt+Print exec grimshot --notify save active
+ bindsym ctrl+Print exec grimshot --notify copy area
+ bindsym $mod+ctrl+Print exec grimshot --notify save area
+
+# 77 105 115 99 
+
+  bindsym $mod+$left focus left
+  bindsym $mod+$down focus down
+  bindsym $mod+$up focus up
+  bindsym $mod+$right focus right
+  bindsym $mod+Left focus left
+  bindsym $mod+Down focus down
+  bindsym $mod+Up focus up
+  bindsym $mod+Right focus right
+  bindsym $mod+Shift+$left move left
+  bindsym $mod+Shift+$down move down
+  bindsym $mod+Shift+$up move up
+  bindsym $mod+Shift+$right move right
+  bindsym $mod+Shift+Left move left
+  bindsym $mod+Shift+Down move down
+  bindsym $mod+Shift+Up move up
+  bindsym $mod+Shift+Right move right
+  bindsym $mod+1 workspace number 1
+  bindsym $mod+2 workspace number 2
+  bindsym $mod+3 workspace number 3
+  bindsym $mod+4 workspace number 4
+  bindsym $mod+5 workspace number 5
+  bindsym $mod+6 workspace number 6
+  bindsym $mod+7 workspace number 7
+  bindsym $mod+8 workspace number 8
+  bindsym $mod+9 workspace number 9
+  bindsym $mod+0 workspace number 10
+  bindsym $mod+Shift+1 move container to workspace number 1
+  bindsym $mod+Shift+2 move container to workspace number 2
+  bindsym $mod+Shift+3 move container to workspace number 3
+  bindsym $mod+Shift+4 move container to workspace number 4
+  bindsym $mod+Shift+5 move container to workspace number 5
+  bindsym $mod+Shift+6 move container to workspace number 6
+  bindsym $mod+Shift+7 move container to workspace number 7
+  bindsym $mod+Shift+8 move container to workspace number 8
+  bindsym $mod+Shift+9 move container to workspace number 9
+  bindsym $mod+Shift+0 move container to workspace number 10
+  bindsym $mod+s layout stacking
+  bindsym $mod+t layout tabbed
+  bindsym $mod+semicolon layout toggle split
+  bindsym $mod+f fullscreen
+  bindsym $mod+Shift+space floating toggle
+  bindsym $mod+space focus mode_toggle
+  for_window [shell="xdg_shell"] title_format "%title (%app_id)"
+  for_window [shell="x_wayland"] title_format "%class - %title"
+
+# 103 97 112 115 
+
+  gaps inner 15
+  gaps outer 5
+  #smart_gaps on
+  #hide_edge_borders smart_no_gaps
+
+# 67 108 105 101 110 116 
+client.focused          #FFFFFF #404040 #F2F2F2 #FFFFFF   #FFFFFF
+client.focused_inactive #404040 #404040 #F2F2F2 #484E50   #484E50
+client.unfocused        #404040 #222222 #CFCFCF #292d2E   #222222
+client.urgent           #2F343A #BE3645 #F2F2F2 #BE3645   #BE3645
+client.placeholder      #000000 #0C0C0C #F2F2F2 #000000   #0C0C0C
+client.background       #F2F2F2
+
+# 66 97 114 
+bar {
+    swaybar_command waybar
+}
