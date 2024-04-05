@@ -3,7 +3,7 @@
 ![image](https://github.com/dru-oss/druniverse/assets/116711909/980b7b92-2ca8-4e0e-8ae6-0484a0132ef7)
 
  * Here I compile all of my projects, whether it be Linux, Linux Guides and whatever stuff I plan to do.
- * Feel free to roam, I just hope you know what are in here, cuz if something happens that's not my thing now.
+ * Feel free to roam, proceed with caution, cuz if something happens that's not my thing now. Don't be stupid today. And the other day, and the other following day.
 
 ### Huge thanks to these people :
  * `Idioteque` from Discord - Helped me on my Gentoo Install, primarily wireless interface
