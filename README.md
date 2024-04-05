@@ -12,7 +12,7 @@
  * `TheyCreeper` from Discord - Someone to vibe with, what a chill guy
 
 > [!IMPORTANT]
-> My Goals for this year
+> Plans
 - [ ] Make a homepage website
 - [ ] Learn a Programming Language
 - [ ] Continue with Linux
