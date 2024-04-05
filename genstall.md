@@ -1,4 +1,8 @@
 # Gentoo UEFI Install 
+
+![image](https://github.com/dru-oss/druniverse/assets/116711909/5d967cf9-4409-4ac6-b27b-bb0f87691cdb)
+
+
 > [!NOTE]
 > This is my guide for a Gentoo UEFI install, Since the Wiki includes `DOS/MBR` + other configuration, I only took what I needed for the minimal install.
 
