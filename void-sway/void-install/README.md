@@ -20,16 +20,16 @@
 `usermod -a -G (I think -aG also works, but whatever) users,wheel,audio,video,cdrom,optical,storage,scanner,kvm,input,plugdev,usbmon,kmem,libvirt`
 
 ### Enable Services ( This ain't SystemD, so no `systemctl enable xx.service`)
-`ln -s /etc/sv/chronyd /var/service/`
+* `ln -s /etc/sv/chronyd /var/service/`
 
-`ln -s /etc/sv/libvirtd /var/service/`
-`ln -s /etc/sv/virtlockd /var/service/`
-`ln -s /etc/sv/virtlogd /var/service/`
-`ln -s /etc/sv/wireplumber /var/service/`
+* `ln -s /etc/sv/libvirtd /var/service/`
+* `ln -s /etc/sv/virtlockd /var/service/`
+* `ln -s /etc/sv/virtlogd /var/service/`
+* `ln -s /etc/sv/wireplumber /var/service/`
 
-`ln -s /etc/sv/dbus /var/service/`
-`ln -s /etc/sv/polkitd /var/service/`
-`ln -s /etc/sv/rtkit /var/service/`
+* `ln -s /etc/sv/dbus /var/service/`
+* `ln -s /etc/sv/polkitd /var/service/`
+* `ln -s /etc/sv/rtkit /var/service/`
 
 ### Some [bonus](https://dev.to/karyan40024/void-linux-gnome--4p3j#recommended_packs)
 
