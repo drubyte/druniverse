@@ -9,7 +9,10 @@
  * `Idioteque` from Discord - Helped me on my Gentoo Install, primarily wireless interface
  * `Alxhr0` from Discord - Helped me on Gentoo as well, and some other tips regarding `MAKEOPTS`
  * `Jake` from Discord - TKG Kernel guy, Encouraged me to dive into the Linux Kernels
- * `TheyCreeper` from Discord - Someone to vibe with, what a chill guy
+ * `TheyCreeper` from Discord (Atlas) - Someone to vibe with, what a chill guy.
+ * `Joetroll` from Discord (Atlas) - idk, a discord mod
+ * `Jay` from Discord (Atlas) - animer and cool human being
+ * `Tymianek` from Discord (Atlas) - chattery but cool person 
 
 > [!IMPORTANT]
 > Plans
