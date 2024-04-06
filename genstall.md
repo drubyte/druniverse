@@ -259,6 +259,30 @@ Having a mirror much closer to yours is a lot better, This also makes sure you g
  - `emerge --sync`
  - If you prefer no texts, `emerge --sync --quiet` (helpful for potato laptops)
 
-   ***break***
+### Reading news items are optional, but feel free to do so if you want to read some stuff
+ * `eselect news list`
+ * `eselect news read`
 
+## Choosing Profiles
+- This is where we pick our selection for profiles, whether it be desktop, plasma or gnome.
+  
+> [!NOTE]
+> Rule of thumb : the shorter the name, the shorter it will take to install and perform world update.
 
+### To see profiles:
+ - `eselect profile list`
+   
+   > At this point, the list is quite long now, if you have a smaller monitor (say 1366x768) you won't be able to see everything on the list.
+   
+ - We can do `eselect profile list >> profiles` and then `nano profiles` to check the list, In this way, you can see what would you pick and select.
+ - Assuming you picked a desktop stage 3 from earlier, it's optional to switch profiles for now.
+
+   > But let's say you want to pick another profile ;
+   - `eselect profile set X` (wherein X is the number for the profile you chose.
+
+ ## Adding a binary host
+
+  > Since I have a potato laptop, I added this for a much better and faster Gentoo install, don't be ashamed for this.
+  > With the binary host, I managed to install Gentoo for 3 hours ( with Wi-Fi working, although very minimal)
+
+---
