@@ -1,0 +1,97 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 30,
+    // Choose the order of the modules idle_inhibitor
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
+    "modules-right": ["backlight", "cpu", "memory", "custom/disk", "battery", "pulseaudio","clock", "tray"],
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1": " ",
+            "2": " ",
+            "3": " ",
+            "4": "四",
+            "5": "五",
+        }
+    },
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+        },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+           },
+    "sway/window": {
+        "format": "{}"
+        //"max-length": 125
+    },
+    "tray": {
+        "icon-size": 14,
+        "spacing": 5
+    },
+    "clock": {
+        "tooltip-format": "{:%A %B %d %Y | %H:%M}",
+        "format": "󰥔 {:%I:%M}",
+        "format-alt": " {:%F  %H:%M:%S}",
+        //"timezones": [ "Athens" ],
+        //"max-length": 200
+        "interval": 1
+    },
+    "cpu": {
+        "format": "  {usage}%",
+        "on-click": "termite -e gotop"
+    },
+    "memory": {
+        "format": " {}%",
+        "on-click": "termite -e gotop"
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", ""]
+          },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", "", "", "", "", "", ""]
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted":"muted ",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["󰕾 ", "󰕾 "]
+        },
+        "on-click": "termite --title pulsemixer_term -e pulsemixer"
+    },
+               "custom/disk": {
+        "format": " {}",
+        "max-length": 80,
+        "escape": false,
+        "exec": "$HOME/.local/bin/disk-stats.sh",
+        "interval": 60,
+        //"on-click": "pcmanfm-qt",
+        "tooltip": false
+    },
+}
