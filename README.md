@@ -17,9 +17,9 @@
 > [!IMPORTANT]
 > Plans
 - [ ] Make a homepage website
-- [ ] Learn a Programming Language
+- [ ] ~~Learn a Programming Language~~
 - [ ] Continue with Linux
-- [ ] Become a better person
 - [ ] Make guides because it's fun
-- [ ] Add my older repos here (Added Void Sway so far)
+- [ ] ~~Add my older repos here (Added Void Sway so far)~~
+- [ ] Learn C++, then G++
 
